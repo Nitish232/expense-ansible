@@ -9,11 +9,15 @@
     ansible.builtin.dnf:
       name: mysql-server
       state: latest
-  - name: start service
+  - name: start service and enable service
     ansible.builtin.service:
       name: mysqld
       state: started
       enabled: yes
+  - name: install python mysql package
+    ansible.builtin.pip:
+      name:
+      - PyMySQL
 # check password is already setup or not
   - name: check db connection
     community.mysql.mysql_info:
@@ -26,3 +30,4 @@
   - name: print output
     ansible.builtin.debug:
       msg: "Output : {{ mysql_info }}"
+  
