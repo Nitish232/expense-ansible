@@ -23,4 +23,6 @@
       filter: version
     ingnore_errors: yes
     register: mysql_info
-    
+  - name: print output
+    ansible.builtin.debug:
+      msg: "Output : {{mysql_info}}"
