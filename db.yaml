@@ -2,7 +2,7 @@
   hosts: db
   become: yes
   vars:
-    login_host: 172.31.22.74
+    login_host: 172.31.93.15
     mysql_root_password: "ExpenseApp@1"
   tasks:
   - name: Install mysql server
