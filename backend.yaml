@@ -2,6 +2,8 @@
   hosts: backend
   become: yes
   vars:
+    login_host: localhost
+    login_password: ExpenseApp@1
 
   tasks:
   - name: disable default nodejs
@@ -36,3 +38,25 @@
     args:
       chdir: /app
     
+  - name: copy backend service
+    ansible.builtin.copy:
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
+  
+  - name: install python mysql package
+    ansible.builtin.pip:
+      name:
+      - PyMySQL #to connect mysql db from ansible
+      - cryptography
+      executable: pip3.9 # pip3.11 if python version is 3.11
+
+  - name: import data into MYSQL
+    community.mysql.mysql_db:
+      name: expense
+      state: import
+      login_user: root
+      login_password: "{{ login_password }}"
+      login_host: "{{ login_host }}"
+      target: /app/schema/backend.sql
+
+
